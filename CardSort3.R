@@ -72,14 +72,16 @@ ggplot(gnames, aes(label = Var1, size= Freq, color = Freq)) +
 # Важно - файл с карточками должен называться cards.xlsx
 
 # Если не установили, установите 
-install.packages(c('openxlsx','igraph', 'factoextra'))
-
+install.packages(c('openxlsx','igraph', 'factoextra', "ggwordcloud", 'rstudioapi'))
 
 
 #Начало
 library(igraph)
 library(openxlsx)
 library(factoextra)
+library(ggwordcloud)
+library(rstudioapi)
+
 setwd(rstudioapi::selectDirectory())
 Raw <- read.xlsx('Card.xlsx')
 Adj <- crossprod(table(Raw$Group_id, Raw$Card))
