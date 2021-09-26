@@ -15,7 +15,7 @@ setwd(
                                  #с латинским названием 
                                  #в папке должен находиться файл с данными - Card.xlsx
 
-#Шаг 2: загрузка данных
+#Шаг 2.5: загрузка данных
 Raw <- read.xlsx('Card.xlsx') #В файле должно быть три столбка минимум
                               #Card - названия карточек
                               #Group_id - номер группы (уникальный для КАЖДОЙ группы)
@@ -55,8 +55,6 @@ plot.igraph(
 
 #Шаг 7: облака слов для названий групп
 
-install.packages("wordcloud") 
-library("wordcloud")
 
 cardgroup <- c('Грифон', 'Василиск', 'Кит') #сюда пишем названия карточек
 
@@ -73,6 +71,7 @@ ggplot(gnames, aes(label = Var1, size= Freq, color = Freq)) +
 
 # Если не установили, установите 
 install.packages(c('openxlsx','igraph', 'factoextra', "ggwordcloud", 'rstudioapi'))
+
 
 
 #Начало
@@ -104,14 +103,13 @@ for(i in 1:19) {
       width = 1000, height = 1000, units = "px")
   myPlot <- plot.igraph(
     graph_from_adjacency_matrix(Adj-max(Adj)*i/20, mode='undirected'),
-    main = paste('Сетевой граф распределения карточек по группам \n',
-                  100-i*5, '% связей'),
     vertex.label.color= "black", vertex.color= "gray", 
     vertex.size= 20, vertex.frame.color='gray',asp = 0.7,
     layout = layout.kamada.kawai,
     vertex.label.cex = 0.9,
     width=1, height=1)
-  print(myPlot)
+  print(myPlot+title(paste('Сетевой граф распределения карточек по группам \n',
+                           100-i*5, '% связей'),cex.main=2))
   dev.off()
 }
 for(i in 1:length(table(Raw$Card))) {
